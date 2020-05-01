@@ -1,5 +1,6 @@
 //variables
 const budgetUser = prompt("Cual es tu presupuesto Semanal");
+const form = document.getElementById("agregar-gasto");
 let QuantityBudget;
 //class budget manage all relaship for logic
 class Budge {
@@ -22,6 +23,44 @@ class Interfase {
     budgetUi.innerHTML = `${quantity}`;
     remainingUi.innerHTML = `${quantity}`;
   }
+  printMessage(message, type) {
+    const divMessage = document.createElement("div");
+    divMessage.classList.add("text-center", "alert");
+
+    if (type === "error") {
+      divMessage.classList.add("alert-danger");
+    } else {
+      divMessage.classList.add("alert-success");
+    }
+    divMessage.appendChild(document.createTextNode(message));
+    //insetDOM
+    document.querySelector(".primario").insertBefore(divMessage, form);
+    //timer Out message
+    setTimeout(() => {
+      document.querySelector(".primario .alert").remove();
+      form.reset();
+    }, 3000);
+  }
+  //inset spending in Html
+  addSpending(name, quantity) {
+    const listSpending = document.querySelector("#gastos ul");
+    //create il
+    const li = document.createElement("li");
+    li.className =
+      "list-group-item d-flex justify-content-between align-item-center";
+    //insert
+    li.innerHTML = `
+        ${name}
+       <span class="badge badge-pill badge-primary">$${quantity}</span>
+    `;
+    listSpending.appendChild(li);
+  }
+  //update remaining
+  remainingBudget(quantity) {
+    const reimaining = document.querySelector("span#restante");
+    const reimainingUi = QuantityBudget.bundgetRemaining(quantity);
+    console.log(reimainingUi);
+  }
 }
 //EventListener
 document.addEventListener("DOMContentLoaded", function () {
@@ -32,5 +71,21 @@ document.addEventListener("DOMContentLoaded", function () {
     QuantityBudget = new Budge(budgetUser);
     const ui = new Interfase();
     ui.insertBudget(QuantityBudget.budgetUser);
+  }
+});
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+  //read data form
+  const nameSpending = document.querySelector("#gasto").value;
+  const quantitySpending = document.querySelector("#cantidad").value;
+  //instance interfases
+  const ui = new Interfase();
+  //check empty inputs
+  if (nameSpending === "" || quantitySpending === "") {
+    ui.printMessage("Te hace falta algun campo.", "error");
+  } else {
+    ui.printMessage("Gasto agregado", "ok");
+    ui.addSpending(nameSpending, quantitySpending);
+    ui.remainingBudget(quantitySpending);
   }
 });
