@@ -58,8 +58,10 @@ class Interfase {
   //update remaining
   remainingBudget(quantity) {
     const reimaining = document.querySelector("span#restante");
+    //update remaining ub logic
     const reimainingUi = QuantityBudget.bundgetRemaining(quantity);
-    console.log(reimainingUi);
+    //update html
+    reimaining.innerHTML = `${reimainingUi}`;
   }
 }
 //EventListener
