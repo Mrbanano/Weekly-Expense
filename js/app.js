@@ -62,6 +62,24 @@ class Interfase {
     const reimainingUi = QuantityBudget.bundgetRemaining(quantity);
     //update html
     reimaining.innerHTML = `${reimainingUi}`;
+
+    this.checkBundget();
+  }
+  //change color remaining
+  checkBundget() {
+    const bundgetTotal = QuantityBudget.budgetUser;
+    const bundgetRemaining = QuantityBudget.remaining;
+    const remainingUi = document.querySelector(".restante");
+    let quarter = bundgetTotal / 4;
+    let half = bundgetTotal / 2;
+    //25%
+    if (quarter > bundgetRemaining) {
+      remainingUi.classList.remove("alert-success", "alert-warning");
+      remainingUi.classList.add("alert-danger");
+    } else if (half > bundgetRemaining) {
+      remainingUi.classList.remove("alert-success");
+      remainingUi.classList.add("alert-warning");
+    }
   }
 }
 //EventListener
