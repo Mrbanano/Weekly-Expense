@@ -1,6 +1,6 @@
 //variables
 //const budgetUser = prompt("Cual es tu presupuesto Semanal");
-const form = document.getElementById("agregar-gasto");
+//const form = document.getElementById("agregar-gasto");
 const btnMode = document.getElementById("switch");
 const btnAdd = document.getElementById("add");
 let QuantityBudget;
@@ -178,14 +178,31 @@ class Interfase {
 document.addEventListener("DOMContentLoaded", function () {
   new Slider(".slider", false);
 
-  //if (budgetUser == null || budgetUser === "") {
-  //window.location.reload();
-  //} else {
-  //create obj to budget
-  //  QuantityBudget = new Budge(budgetUser);
-  //const ui = new Interfase();
-  // ui.insertBudget(QuantityBudget.budgetUser);
-  // }
+  (async () => {
+    const { value: budget } = await Swal.fire({
+      imageUrl: "./img/money.svg",
+      imageHeight: 100,
+      imageAlt: "Administra tus gastos",
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      stopKeydownPropagation: false,
+      title: "¡Bienvenido!",
+      text: "Ingresa tu presupuesto para esta semana",
+      input: "text",
+      inputPlaceholder: " $00.00Mxn",
+      inputValue: "",
+    });
+    console.log(budget);
+    if (budget == null || budget === "") {
+      window.location.reload();
+    } else {
+      //create obj to budget
+      QuantityBudget = new Budge(budget);
+      const ui = new Interfase();
+      console.log(QuantityBudget);
+      //ui.insertBudget(budgetUser);
+    }
+  })();
 });
 btnMode.addEventListener("click", function (e) {
   e.preventDefault();
@@ -193,23 +210,5 @@ btnMode.addEventListener("click", function (e) {
 });
 
 btnAdd.addEventListener("click", function (e) {
-  e.preventDefault();
-  alert("agregar");
-});
-
-form.addEventListener("submit", function (e) {
-  e.preventDefault();
-  //read data form
-  const nameSpending = document.querySelector("#gasto").value;
-  const quantitySpending = document.querySelector("#cantidad").value;
-  //instance interfases
-  const ui = new Interfase();
-  //check empty inputs
-  if (nameSpending === "" || quantitySpending === "") {
-    ui.printMessage("Te hace falta algun campo.", "error");
-  } else {
-    ui.printMessage("Gasto agregado", "ok");
-    ui.addSpending(nameSpending, quantitySpending);
-    ui.remainingBudget(quantitySpending);
-  }
+  Swal.fire({});
 });
