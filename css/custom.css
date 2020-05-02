@@ -1,5 +1,149 @@
+.cash {
+  margin-top: -50px;
+}
+.icons {
+  width: 50px;
+  height: 50px;
+  margin: auto;
+}
+.shadow {
+  border: none;
+}
+.shadowBox {
+  border-radius: 10px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.16), 0px 2px 10px rgba(0, 0, 0, 0.12);
+}
+.days {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  margin: 30px auto;
+}
+.days li {
+  width: 50px;
+  height: 50px;
+  background-color: tomato;
+  border-radius: 100%;
+  list-style: none;
+  display: inline-block;
+}
+/*
+.spending {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 7fr 3fr;
+}
+slider*/
+
+.slider {
+  overflow: hidden;
+  position: relative;
+}
+
+.slider .Daycontainer {
+  white-space: nowrap;
+  position: relative;
+  transition: all 0.3s;
+}
+
+.slider .Daycontainer * {
+  white-space: normal;
+}
+.empty {
+  padding: 0.6em;
+  width: 100%;
+  background: #eee;
+  height: 200px;
+  box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.4);
+}
+.empty img {
+  margin: 0 calc(50% - 50px);
+  width: 100px;
+  height: 100px;
+}
+
+.slider .days {
+  width: 100%;
+  display: inline-block;
+  margin-right: -4.2px;
+}
+.controls {
+  margin: 2em 0 2em 0;
+  width: 100%;
+}
+.slider .controls ul {
+  padding: 0px;
+
+  text-align: center;
+  bottom: 1em;
+  margin: 0px;
+  width: 100%;
+  z-index: 5;
+}
+.circuleDay {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+.sub {
+  padding: 0.1em;
+  font-size: 10px;
+}
+.slider .controls li.active {
+  background-color: blue;
+  color: white;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
+}
+
+.slider .controls li {
+  list-style: none;
+  background-color: #ffffff;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  margin-right: 10px;
+  display: inline-block;
+  cursor: pointer;
+}
+/*fin slider*/
+@media only screen and (min-device-width: 300px) and (max-device-width: 800px) {
+  * {
+    padding: 0;
+    margin: 0;
+  }
+  #app {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  .rounded {
+    padding-left: 0px;
+  }
+  #card {
+    margin-top: -0.1em !important ;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.16),
+      0px 2px 10px rgba(0, 0, 0, 0.12);
+  }
+  .card-img-top {
+    height: 150px;
+  }
+  .cash {
+    margin-top: -60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .shadow {
+    height: 130px;
+    font-size: 0.5em;
+    margin: 0;
+    padding-bottom: 1em;
+    border-radius: 0;
+  }
+  .icons {
+    width: 25%;
+    height: 25%;
+  }
+}
+
 body {
-  background-color: #eee;
+  /*background-color: #eee;
   /*background: #000428;  /* fallback for old browsers 
 background: -webkit-linear-gradient(to right, #004e92, #000428);  
 background: linear-gradient(to right, #004e92, #000428); */
