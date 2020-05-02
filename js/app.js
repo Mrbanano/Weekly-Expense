@@ -1,6 +1,8 @@
 //variables
 //const budgetUser = prompt("Cual es tu presupuesto Semanal");
 const form = document.getElementById("agregar-gasto");
+const btnMode = document.getElementById("switch");
+const btnAdd = document.getElementById("add");
 let QuantityBudget;
 
 //cont elements
@@ -174,7 +176,7 @@ class Interfase {
 }
 //EventListener
 document.addEventListener("DOMContentLoaded", function () {
-  new Slider(".slider", true);
+  new Slider(".slider", false);
 
   //if (budgetUser == null || budgetUser === "") {
   //window.location.reload();
@@ -185,6 +187,16 @@ document.addEventListener("DOMContentLoaded", function () {
   // ui.insertBudget(QuantityBudget.budgetUser);
   // }
 });
+btnMode.addEventListener("click", function (e) {
+  e.preventDefault();
+  btnMode.classList.toggle("active");
+});
+
+btnAdd.addEventListener("click", function (e) {
+  e.preventDefault();
+  alert("agregar");
+});
+
 form.addEventListener("submit", function (e) {
   e.preventDefault();
   //read data form

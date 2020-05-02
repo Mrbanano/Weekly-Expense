@@ -27,6 +27,12 @@
         />
         <!--texto en imagen-->
         <div class="card-img-overlay text-white">
+          <div class="mode">
+            <button class="switch active" id="switch">
+              <span><i class="fas fa-sun"></i></span>
+              <span><i class="fas fa-moon"></i></span>
+            </button>
+          </div>
           <h4 class="card-title text-center mt-5">
             <span>$100,000,000.00</span>
           </h4>
@@ -36,7 +42,7 @@
         <!---body-->
         <div class="card-body">
           <!---indicadores-->
-          <div class="card-group cash shadowBox">
+          <div class="card-group cash shadowBox rounded rounded-top">
             <!---card restante-->
             <div class="card shadow">
               <img
@@ -51,7 +57,7 @@
               </div>
             </div>
             <!---card gasto-->
-            <div class="card shadow">
+            <div class="card shadow rounded-right">
               <img
                 class="card-img-top icons mt-4"
                 src="./img/devaluacion.svg"
@@ -133,6 +139,9 @@
         </div>
         <!---body-->
       </div>
+      <div id="add" class="btn-add">
+        <i class="fas fa-plus-circle"></i>
+      </div>
       <!---footer-->
       <div class="card-footer text-muted text-center">
         Iconos diseñados por
@@ -161,7 +170,10 @@
       integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4"
       crossorigin="anonymous"
     ></script>
-
+    <script
+      src="https://kit.fontawesome.com/54ab5c1dbd.js"
+      crossorigin="anonymous"
+    ></script>
     <script src="./js/app.js"></script>
   </body>
 </html>

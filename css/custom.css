@@ -1,3 +1,54 @@
+.mode {
+  padding: 0.5em;
+  position: absolute;
+  right: 0;
+}
+.switch {
+  background: #343d5b;
+  border-radius: 1000px;
+  border: none;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  outline: none;
+}
+.switch::after {
+  content: "";
+  display: block;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  background: #f1f1f1;
+  top: 0;
+  left: 0;
+  right: unset;
+  border-radius: 100px;
+  transition: 0.3s ease all;
+  box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.2);
+}
+.switch:focus {
+  border: none;
+  outline: none;
+}
+.active {
+  background-color: orange;
+  color: #000;
+}
+.active::after {
+  left: unset;
+  right: 0;
+}
+
+.switch span {
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  display: block;
+  background: none;
+  color: #fff;
+}
+
+/*content*/
 .cash {
   margin-top: -50px;
 }
@@ -10,7 +61,6 @@
   border: none;
 }
 .shadowBox {
-  border-radius: 10px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.16), 0px 2px 10px rgba(0, 0, 0, 0.12);
 }
 .days {
@@ -104,10 +154,31 @@ slider*/
   cursor: pointer;
 }
 /*fin slider*/
+/*btn*/
+.btn-add {
+  position: fixed;
+  bottom: 20px;
+  right: 10%;
+  border-radius: 100%;
+}
+
+.fa-plus-circle {
+  color: #a18cd1;
+  font-size: 3em;
+  background-color: white;
+  border-radius: 100%;
+}
+.fa-plus-circle:hover {
+  color: #9480c3;
+}
+
 @media only screen and (min-device-width: 300px) and (max-device-width: 800px) {
   * {
     padding: 0;
     margin: 0;
+  }
+  .mode {
+    padding: 0em 0.5e;
   }
   #app {
     padding-left: 0px;
