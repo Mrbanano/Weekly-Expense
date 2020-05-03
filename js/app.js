@@ -1,15 +1,98 @@
 //variables
+let hours, dayLetter;
 let budgetUser = 0;
 let accumulatedExpense = 0;
-let dayLetter;
 let yearInitial = 0;
 let monthInitial = 0;
 let dayInitial = 0;
+let ImagenState = true;
+const imgBg = ["./img/header.jpg", "./img/header1.jpg"];
 //const form = document.getElementById("agregar-gasto");
-const btnMode = document.getElementById("switch");
 const btnAdd = document.getElementById("add");
+const btnMode = document.getElementById("switch");
 let QuantityBudget;
-
+//dark mode
+class DarkMode {
+  constructor(body, container, img, card, control, expenditures) {
+    this.body = document.querySelector(body);
+    this.container = document.querySelector(container);
+    this.img = document.querySelector(img);
+    this.card = document.querySelector(card).children;
+    this.control = document.querySelector(control).children;
+    this.expenditure = document.querySelector(expenditures).children;
+    this.bg = imgBg;
+  }
+  toggle() {
+    let cards = Array.from(this.card);
+    let indicators = Array.from(this.control);
+    let expenditures = Array.from(this.expenditure);
+    ImagenState = !ImagenState;
+    this.body.classList.toggle("bg-dark");
+    this.container.classList.toggle("bg-dark");
+    this.container.classList.toggle("text-white");
+    ImagenState
+      ? this.img.setAttribute("src", this.bg[1])
+      : this.img.setAttribute("src", this.bg[0]);
+    cards.forEach(function (card) {
+      card.classList.toggle("bg-dark");
+    });
+    indicators.forEach(function (indicator) {
+      indicator.classList.toggle("bg-dark");
+    });
+    expenditures.forEach(function (expenditure) {
+      expenditure.classList.toggle("bg-secondary");
+      expenditure.style.color = "#000";
+    });
+    this.saveMode();
+  }
+  saveMode() {
+    if (document.body.classList.contains("bg-dark")) {
+      localStorage.setItem("dark-mode", "true");
+    } else {
+      localStorage.setItem("dark-mode", "false");
+    }
+  }
+  InitailMode() {
+    let cards = Array.from(this.card);
+    let indicators = Array.from(this.control);
+    let expenditures = Array.from(this.expenditure);
+    if (localStorage.getItem("dark-mode") === "true") {
+      btnMode.classList.remove("active");
+      ImagenState = true;
+      this.img.setAttribute("src", this.bg[1]);
+      this.body.classList.add("bg-dark");
+      this.container.classList.add("bg-dark");
+      this.container.classList.add("text-white");
+      cards.forEach(function (card) {
+        card.classList.add("bg-dark");
+      });
+      indicators.forEach(function (indicator) {
+        indicator.classList.add("bg-dark");
+      });
+      expenditures.forEach(function (expenditure) {
+        expenditure.classList.add("bg-secondary");
+        expenditure.style.color = "#000";
+      });
+    } else {
+      this.img.setAttribute("src", this.bg[0]);
+      ImagenState = false;
+      btnMode.classList.add("active");
+      this.body.classList.remove("bg-dark");
+      this.container.classList.remove("bg-dark");
+      this.container.classList.remove("text-white");
+      cards.forEach(function (card) {
+        card.classList.remove("bg-dark");
+      });
+      indicators.forEach(function (indicator) {
+        indicator.classList.remove("bg-dark");
+      });
+      expenditures.forEach(function (expenditure) {
+        expenditure.classList.remove("bg-secondary");
+        expenditure.style.color = "#000";
+      });
+    }
+  }
+}
 //cont elements
 class IndexForSiblings {
   static get(el) {
@@ -36,37 +119,42 @@ class Slider {
     this.buildControls();
     this.bindEvents();
   }
-
+  //initail
   start() {
     if (!this.movimiento) return;
     this.interval = window.setInterval(this.move, 5000);
   }
+  //reset count
   resetContador() {
     if (this.interval) window.clearInterval(this.interval);
     this.start();
   }
+  //bind events
   bindEvents() {
     this.slider.querySelectorAll(".controls li").forEach((item) => {
       item.addEventListener("click", this.moveByButton);
     });
   }
+  //check
   moveByButton(ev) {
     let index = IndexForSiblings.get(ev.currentTarget);
     this.contador = index;
     this.moveTo(index);
     this.resetContador();
   }
+  //if indicator is true
   move() {
     this.contador++;
     if (this.contador > this.itemsCount - 1) this.contador = 0;
     this.moveTo(this.contador);
   }
-
+  //reset
   resetIndicador() {
     this.slider
       .querySelectorAll(".controls li.active")
       .forEach((item) => item.classList.remove("active"));
   }
+  //control to move days
   moveTo(index) {
     const card = -1 * document.querySelector("#dayOne").clientWidth;
     let left = index * card;
@@ -77,6 +165,7 @@ class Slider {
       .classList.add("active");
     this.slider.querySelector(".Daycontainer").style.left = left + "px";
   }
+  //create html controls
   builHtml(Start, End, InitalDaty, day, regulation = 0) {
     for (let i = Start; i < End; i++) {
       let control = document.createElement("li");
@@ -96,9 +185,9 @@ class Slider {
     let day = this.getDaysLetter(dayLetter);
     let limitMonth = this.getDaysLimit(monthInitial, yearInitial);
     let dayLess = limitMonth - InitalDaty;
-
+    //check if month finisher
     if (dayLess <= this.itemsCount) {
-      console.log("faltan menos de 7 dias ");
+      //buil 2component
       const buil = this.builHtml(0, dayLess + 1, InitalDaty, day);
       const builm = this.builHtml(
         1,
@@ -108,14 +197,11 @@ class Slider {
         dayLess
       );
     } else {
+      //buil normal controls
       const buil = this.builHtml(0, this.itemsCount, InitalDaty, day);
     }
-
-    console.log(dayLess);
-
-    let control = 4;
   }
-
+  //select array days
   getDaysLetter(dayInitial) {
     let Day = [];
     switch (dayInitial) {
@@ -143,7 +229,7 @@ class Slider {
     }
     return Day;
   }
-
+  //select limit day and verify if year have febrary 29 days
   getDaysLimit(month, year) {
     //check if year is bisiesto
     const yearbase = 2020;
@@ -265,88 +351,76 @@ class Interfase {
     }
   }
 }
+class Alert {
+  StarAlert() {
+    (async () => {
+      const { value: budgetInitail } = await Swal.fire({
+        imageUrl: "./img/money.svg",
+        imageHeight: 100,
+        imageAlt: "Administra tus gastos",
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        stopKeydownPropagation: false,
+        title: "¡Bienvenido!",
+        text: "Ingresa tu presupuesto para esta semana",
+        input: "text",
+        inputPlaceholder: " $00.00Mxn",
+        inputValue: "",
+      });
+      budgetUser = budgetInitail;
+      if (budgetUser == null || budgetUser === "") {
+        window.location.reload();
+      } else {
+        QuantityBudget = new Budge(budgetUser);
+        console.log(QuantityBudget);
+        const ui = new Interfase();
+        ui.insertBudget(QuantityBudget.budgetUser);
+      }
+    })();
+  }
+}
 //EventListener
 document.addEventListener("DOMContentLoaded", function () {
   const year = dayjs().format("YYYY");
   const month = dayjs().format("M");
   const day = dayjs().format("D");
   const dateletter = new Date().getDay();
+  hours = dayjs().format("hh:mmA");
+
+  console.log(hours);
   yearInitial = year;
   monthInitial = month;
   dayLetter = dateletter;
   dayInitial = day;
+  const mode = new DarkMode(
+    "body",
+    "#card",
+    ".card-img-top",
+    "#money ",
+    ".controls ul",
+    ".Daycontainer"
+  );
   new Slider(".slider", false);
-  /*(async () => {
-    const { value: budgetInitail } = await Swal.fire({
-      imageUrl: "./img/money.svg",
-      imageHeight: 100,
-      imageAlt: "Administra tus gastos",
-      allowOutsideClick: false,
-      allowEscapeKey: false,
-      stopKeydownPropagation: false,
-      title: "¡Bienvenido!",
-      text: "Ingresa tu presupuesto para esta semana",
-      input: "text",
-      inputPlaceholder: " $00.00Mxn",
-      inputValue: "",
-    });
-    budgetUser = budgetInitail;
-    if (budgetUser == null || budgetUser === "") {
-      window.location.reload();
-    } else {
-      QuantityBudget = new Budge(budgetUser);
-      console.log(QuantityBudget);
-      const ui = new Interfase();
-      ui.insertBudget(QuantityBudget.budgetUser);
-    }
-  })();*/
+  const startAlert = new Alert();
+  mode.InitailMode();
+  startAlert.StarAlert();
 });
 
 btnMode.addEventListener("click", function (e) {
   e.preventDefault();
+  const darkmode = new DarkMode(
+    "body",
+    "#card",
+    ".card-img-top",
+    "#money ",
+    ".controls ul",
+    ".Daycontainer"
+  );
+  darkmode.toggle();
   btnMode.classList.toggle("active");
 });
 
-btnAdd.addEventListener("click", function (e) {
-  (async () => {
-    const { value: formValues } = await Swal.fire({
-      imageUrl: "./img/outsale.svg",
-      imageHeight: 100,
-      imageAlt: "Agrega un gasto",
-      allowOutsideClick: false,
-      allowEscapeKey: false,
-      stopKeydownPropagation: false,
-      title: "¡Gasto!",
-      text: "Agrega un gasto",
-      html:
-        '<input id="swal-input1" required placeholder="Nombre del gasto" class="swal2-input text-center">' +
-        '<input id="swal-input2" required placeholder="Monto Gastado $00.00"class="swal2-input text-center">',
-      focusConfirm: false,
-      preConfirm: () => {
-        return [
-          document.getElementById("swal-input1").value,
-          document.getElementById("swal-input2").value,
-        ];
-      },
-      function(formValues) {
-        const value = Swal.fire(JSON.stringify(formValues));
-        console.log(value);
-        if (value[0] === "" || value[0] === null) {
-          swal.showInputError("Necesitas ponerle Nombre al gasto!");
-          return false;
-        }
-      },
-    });
-    //read data form
-    const nameSpending = formValues[0];
-    const quantitySpending = formValues[0];
-    //check empty
-    if (nameSpending === "" || quantitySpending === "") {
-      return false;
-      console.log("no hay nada ");
-    }
-  })();
-});
+btnAdd.addEventListener("click", function (e) {});
 
 /*form.addEventListener("submit", function (e) {
   e.preventDefault();
