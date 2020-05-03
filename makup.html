@@ -9,23 +9,18 @@
       integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy"
       crossorigin="anonymous"
     />
-    <meta name="theme-color" content="#c287f4" />
+    <meta name="theme-color" content="#343a40" />
     <link rel="stylesheet" href="./css/custom.css" />
     <title>Gasto Semanal</title>
   </head>
   <body>
-    <p id="demo"></p>
     <!---contenedor principal-->
     <div id="app" class="container container-xl">
       <!---tarjeta princpial-->
       <!---headerCard-->
       <div id="card" class="card mt-5">
         <!---imagen de fondo-->
-        <img
-          class="card-img-top rounded"
-          src="./img/header.jpg"
-          alt="Card image cap"
-        />
+        <img class="card-img-top rounded" src="" alt="Card image cap" />
         <!--texto en imagen-->
         <div class="card-img-overlay text-white">
           <div class="mode">
@@ -34,7 +29,7 @@
               <span><i class="fas fa-moon"></i></span>
             </button>
           </div>
-          <h4 class="card-title text-center mt-5">
+          <h4 class="card-title text-center mt-5 mb-2">
             <span id="total">$100,000,000.00</span>
           </h4>
           <p class="card-text"></p>
@@ -43,9 +38,9 @@
         <!---body-->
         <div class="card-body">
           <!---indicadores-->
-          <div class="card-group cash shadowBox rounded rounded-top">
+          <div id="money" class="card-group cash shadowBox rounded rounded-top">
             <!---card restante-->
-            <div class="card shadow">
+            <div class="card shadow card-money">
               <img
                 class="card-img-top icons mt-4"
                 src="./img/iconMore.svg"
@@ -58,7 +53,7 @@
               </div>
             </div>
             <!---card gasto-->
-            <div class="card shadow rounded-right">
+            <div class="card shadow card-money rounded-right">
               <img
                 class="card-img-top icons mt-4"
                 src="./img/devaluacion.svg"
@@ -144,7 +139,7 @@
         <i class="fas fa-plus-circle"></i>
       </div>
       <!---footer-->
-      <div class="card-footer text-muted text-center">
+      <div class="card-footer disable text-muted text-center">
         Iconos diseñados por
         <a href="https://www.flaticon.es/autores/freepik" title="Freepik"
           >Freepik</a
