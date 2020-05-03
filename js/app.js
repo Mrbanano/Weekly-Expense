@@ -77,24 +77,43 @@ class Slider {
       .classList.add("active");
     this.slider.querySelector(".Daycontainer").style.left = left + "px";
   }
+  builHtml(Start, End, InitalDaty, day, regulation = 0) {
+    for (let i = Start; i < End; i++) {
+      let control = document.createElement("li");
+      control.innerHTML = `
+        <div class="circuleDay">
+        <span class="sub"><strong>${InitalDaty + i}</strong></span>
+        <span class="sub">${day[i + regulation]}</span>
+        </div>
+      `;
+      if (i == 0) control.classList.add("active");
+      this.slider.querySelector(".controls ul").appendChild(control);
+    }
+  }
 
   buildControls() {
     let InitalDaty = Number(dayInitial);
     let day = this.getDaysLetter(dayLetter);
     let limitMonth = this.getDaysLimit(monthInitial, yearInitial);
+    let dayLess = limitMonth - InitalDaty;
 
-    for (let i = 0; i < this.itemsCount; i++) {
-      let control = document.createElement("li");
-      control.innerHTML = `
-        <div class="circuleDay">
-        <span class="sub"><strong>${InitalDaty + i}</strong></span>
-        <span class="sub">${day[i]}</span>
-        </div>
-      `;
-      if (i == 0) control.classList.add("active");
-
-      this.slider.querySelector(".controls ul").appendChild(control);
+    if (dayLess <= this.itemsCount) {
+      console.log("faltan menos de 7 dias ");
+      const buil = this.builHtml(0, dayLess + 1, InitalDaty, day);
+      const builm = this.builHtml(
+        1,
+        this.itemsCount - dayLess,
+        0,
+        day,
+        dayLess
+      );
+    } else {
+      const buil = this.builHtml(0, this.itemsCount, InitalDaty, day);
     }
+
+    console.log(dayLess);
+
+    let control = 4;
   }
 
   getDaysLetter(dayInitial) {
@@ -129,12 +148,34 @@ class Slider {
     //check if year is bisiesto
     const yearbase = 2020;
     let isBisisto = false;
+    let Month = Number(month);
+    let limit = 0;
     for (let i = 0; i < 21; i++) {
       let a = yearbase + i * 4;
       if (a === Number(year)) {
         isBisisto = true;
       }
     }
+    //check limit month
+    if (Month === 4 || Month === 6 || Month === 9 || month === 11) {
+      limit = 30;
+    } else if (
+      Month === 1 ||
+      Month === 3 ||
+      Month === 5 ||
+      month === 7 ||
+      Month === 8 ||
+      Month === 10 ||
+      Month === 12
+    ) {
+      limit = 31;
+    } else if (Month === 2 && isBisisto === true) {
+      limit = 29;
+    } else {
+      limit = 28;
+    }
+
+    return limit;
   }
 }
 
