@@ -1,3 +1,9 @@
+.card-img-top,
+#card,
+body,
+.card-money {
+  transition: baclground 0.5s ease-in;
+}
 .mode {
   padding: 0.5em;
   position: absolute;
@@ -11,6 +17,7 @@
   cursor: pointer;
   display: flex;
   outline: none;
+  transition: all 0.5s ease-in;
 }
 .switch::after {
   content: "";
@@ -23,7 +30,7 @@
   left: 0;
   right: unset;
   border-radius: 100px;
-  transition: 0.3s ease all;
+  transition: all 0.5s ease-in;
   box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.2);
 }
 .switch:focus {
@@ -33,10 +40,12 @@
 .active {
   background-color: orange;
   color: #000;
+  transition: all 0.5s ease-in;
 }
 .active::after {
   left: unset;
   right: 0;
+  transition: all 0.5s ease-in;
 }
 
 .switch span {
@@ -46,16 +55,22 @@
   display: block;
   background: none;
   color: #fff;
+  transition: all 0.5s ease-in;
 }
 
 /*content*/
 .cash {
   margin-top: -50px;
+  transition: all 0.5s ease-in;
 }
 .icons {
   width: 50px;
   height: 50px;
   margin: auto;
+}
+.coin {
+  width: 25px;
+  height: 25px;
 }
 .shadow {
   border: none;
@@ -92,7 +107,7 @@ slider*/
 .slider .Daycontainer {
   white-space: nowrap;
   position: relative;
-  transition: all 0.3s;
+  transition: all 0.3s ease-in-out;
 }
 
 .slider .Daycontainer * {
@@ -106,7 +121,7 @@ slider*/
   box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.4);
 }
 .empty img {
-  margin: 0 calc(50% - 50px);
+  margin: 0px calc(50% - 50px);
   width: 100px;
   height: 100px;
 }
@@ -143,6 +158,12 @@ slider*/
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
 }
 
+.slider .controls li.active.bg-dark {
+  background-color: #fff !important;
+  color: black;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
+}
+
 .slider .controls li {
   list-style: none;
   background-color: #ffffff;
@@ -153,6 +174,9 @@ slider*/
   display: inline-block;
   cursor: pointer;
 }
+.black {
+  background-color: #343a40;
+}
 /*fin slider*/
 /*btn*/
 .btn-add {
@@ -161,7 +185,6 @@ slider*/
   right: 10%;
   border-radius: 100%;
 }
-
 .fa-plus-circle {
   color: #a18cd1;
   font-size: 3em;
