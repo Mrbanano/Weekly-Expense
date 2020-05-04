@@ -97,6 +97,7 @@ class Slider {
         </div>
       `;
       if (i == currentDay) control.classList.add("active");
+      console.log(currentDay);
       this.slider.querySelector(".controls ul").appendChild(control);
     }
   }
@@ -314,12 +315,10 @@ class Budge {
     this.expenditure = Number(accumulatedExpense);
   }
   bundgetRemaining(quantity = 0) {
-    this.BundgetExpense(quantity);
     return (this.remaining -= Number(quantity));
   }
-  BundgetExpense() {
-    return (this.accumulatedExpense =
-      Number(this.budgetUser) - Number(this.reimaining));
+  BundgetExpense(quantity = 0) {
+    return (Number(this.accumulatedExpense) += Number(quantity));
   }
 }
 //class interfase manage all relaship for HTML
@@ -376,7 +375,7 @@ class Interfase {
     const expenditure = document.querySelector("span#Expense");
     //update remaining ub logic
     const reimainingUi = QuantityBudget.bundgetRemaining(quantity);
-    const expenditureUi = QuantityBudget.BundgetExpense();
+    const expenditureUi = QuantityBudget.BundgetExpense(quantity);
     //update html
     reimaining.innerHTML = `${reimainingUi}`;
     expenditure.innerHTML = `${expenditureUi}`;
