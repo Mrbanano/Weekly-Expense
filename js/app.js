@@ -1,98 +1,19 @@
-//variables
-let hours, dayLetter;
-let budgetUser = 0;
-let accumulatedExpense = 0;
-let yearInitial = 0;
-let monthInitial = 0;
-let dayInitial = 0;
-let ImagenState = true;
+//constantes
 const imgBg = ["./img/header.jpg", "./img/header1.jpg"];
-//const form = document.getElementById("agregar-gasto");
-const btnAdd = document.getElementById("add");
 const btnMode = document.getElementById("switch");
-let QuantityBudget;
-//dark mode
-class DarkMode {
-  constructor(body, container, img, card, control, expenditures) {
-    this.body = document.querySelector(body);
-    this.container = document.querySelector(container);
-    this.img = document.querySelector(img);
-    this.card = document.querySelector(card).children;
-    this.control = document.querySelector(control).children;
-    this.expenditure = document.querySelector(expenditures).children;
-    this.bg = imgBg;
-  }
-  toggle() {
-    let cards = Array.from(this.card);
-    let indicators = Array.from(this.control);
-    let expenditures = Array.from(this.expenditure);
-    ImagenState = !ImagenState;
-    this.body.classList.toggle("bg-dark");
-    this.container.classList.toggle("bg-dark");
-    this.container.classList.toggle("text-white");
-    ImagenState
-      ? this.img.setAttribute("src", this.bg[1])
-      : this.img.setAttribute("src", this.bg[0]);
-    cards.forEach(function (card) {
-      card.classList.toggle("bg-dark");
-    });
-    indicators.forEach(function (indicator) {
-      indicator.classList.toggle("bg-dark");
-    });
-    expenditures.forEach(function (expenditure) {
-      expenditure.classList.toggle("bg-secondary");
-      expenditure.style.color = "#000";
-    });
-    this.saveMode();
-  }
-  saveMode() {
-    if (document.body.classList.contains("bg-dark")) {
-      localStorage.setItem("dark-mode", "true");
-    } else {
-      localStorage.setItem("dark-mode", "false");
-    }
-  }
-  InitailMode() {
-    let cards = Array.from(this.card);
-    let indicators = Array.from(this.control);
-    let expenditures = Array.from(this.expenditure);
-    if (localStorage.getItem("dark-mode") === "true") {
-      btnMode.classList.remove("active");
-      ImagenState = true;
-      this.img.setAttribute("src", this.bg[1]);
-      this.body.classList.add("bg-dark");
-      this.container.classList.add("bg-dark");
-      this.container.classList.add("text-white");
-      cards.forEach(function (card) {
-        card.classList.add("bg-dark");
-      });
-      indicators.forEach(function (indicator) {
-        indicator.classList.add("bg-dark");
-      });
-      expenditures.forEach(function (expenditure) {
-        expenditure.classList.add("bg-secondary");
-        expenditure.style.color = "#000";
-      });
-    } else {
-      this.img.setAttribute("src", this.bg[0]);
-      ImagenState = false;
-      btnMode.classList.add("active");
-      this.body.classList.remove("bg-dark");
-      this.container.classList.remove("bg-dark");
-      this.container.classList.remove("text-white");
-      cards.forEach(function (card) {
-        card.classList.remove("bg-dark");
-      });
-      indicators.forEach(function (indicator) {
-        indicator.classList.remove("bg-dark");
-      });
-      expenditures.forEach(function (expenditure) {
-        expenditure.classList.remove("bg-secondary");
-        expenditure.style.color = "#000";
-      });
-    }
-  }
-}
+const btnAdd = document.getElementById("add");
+//variables
+let hours, dayLetter, currentDay, QuantityBudget, dayAccumulated;
+//initial Number var
+let accumulatedExpense = 0;
+let monthInitial = 0;
+let yearInitial = 0;
+let budgetUser = 0;
+let dayInitial = 0;
+//initial Boolean var
+let ImagenState = true;
+let haveBudget = true;
+//const form = document.getElementById("agregar-gasto");
 //cont elements
 class IndexForSiblings {
   static get(el) {
@@ -175,7 +96,7 @@ class Slider {
         <span class="sub">${day[i + regulation]}</span>
         </div>
       `;
-      if (i == 0) control.classList.add("active");
+      if (i == currentDay) control.classList.add("active");
       this.slider.querySelector(".controls ul").appendChild(control);
     }
   }
@@ -264,7 +185,127 @@ class Slider {
     return limit;
   }
 }
-
+//dark mode
+class DarkMode {
+  constructor(body, container, img, card, control, expenditures) {
+    this.body = document.querySelector(body);
+    this.container = document.querySelector(container);
+    this.img = document.querySelector(img);
+    this.card = document.querySelector(card).children;
+    this.control = document.querySelector(control).children;
+    this.expenditure = document.querySelector(expenditures).children;
+    this.bg = imgBg;
+  }
+  toggle() {
+    let cards = Array.from(this.card);
+    let indicators = Array.from(this.control);
+    let expenditures = Array.from(this.expenditure);
+    ImagenState = !ImagenState;
+    this.body.classList.toggle("bg-dark");
+    this.container.classList.toggle("bg-dark");
+    this.container.classList.toggle("text-white");
+    ImagenState
+      ? this.img.setAttribute("src", this.bg[1])
+      : this.img.setAttribute("src", this.bg[0]);
+    cards.forEach(function (card) {
+      card.classList.toggle("bg-dark");
+    });
+    indicators.forEach(function (indicator) {
+      indicator.classList.toggle("bg-dark");
+    });
+    expenditures.forEach(function (expenditure) {
+      expenditure.classList.toggle("bg-secondary");
+      expenditure.style.color = "#000";
+    });
+    this.saveMode();
+  }
+  saveMode() {
+    if (document.body.classList.contains("bg-dark")) {
+      localStorage.setItem("dark-mode", "true");
+    } else {
+      localStorage.setItem("dark-mode", "false");
+    }
+  }
+  InitailMode() {
+    let cards = Array.from(this.card);
+    let indicators = Array.from(this.control);
+    let expenditures = Array.from(this.expenditure);
+    if (localStorage.getItem("dark-mode") === "true") {
+      btnMode.classList.remove("active");
+      ImagenState = true;
+      this.img.setAttribute("src", this.bg[1]);
+      this.body.classList.add("bg-dark");
+      this.container.classList.add("bg-dark");
+      this.container.classList.add("text-white");
+      cards.forEach(function (card) {
+        card.classList.add("bg-dark");
+      });
+      indicators.forEach(function (indicator) {
+        indicator.classList.add("bg-dark");
+      });
+      expenditures.forEach(function (expenditure) {
+        expenditure.classList.add("bg-secondary");
+        expenditure.style.color = "#000";
+      });
+    } else {
+      this.img.setAttribute("src", this.bg[0]);
+      ImagenState = false;
+      btnMode.classList.add("active");
+      this.body.classList.remove("bg-dark");
+      this.container.classList.remove("bg-dark");
+      this.container.classList.remove("text-white");
+      cards.forEach(function (card) {
+        card.classList.remove("bg-dark");
+      });
+      indicators.forEach(function (indicator) {
+        indicator.classList.remove("bg-dark");
+      });
+      expenditures.forEach(function (expenditure) {
+        expenditure.classList.remove("bg-secondary");
+        expenditure.style.color = "#000";
+      });
+    }
+  }
+}
+//restar data
+class BudgetStorage {
+  //save initial config
+  SaveHaveBudget() {
+    if (haveBudget === true) {
+      localStorage.setItem("haveBudget", "true");
+      localStorage.setItem("budget", QuantityBudget.budgetUser);
+      localStorage.setItem("dayInitial", dayInitial);
+      localStorage.setItem("dayLetter", dayLetter);
+    } else {
+      localStorage.setItem("haveBudget", "false");
+    }
+  }
+  //check if app is initial
+  CheckHaveBudget() {
+    let budgetLS;
+    if (localStorage.getItem("haveBudget") === "true") {
+      haveBudget = true;
+      this.getDateInitail();
+    } else {
+      haveBudget = false;
+    }
+  }
+  //restar day
+  getDateInitail() {
+    if (localStorage.getItem("budget")) {
+      budgetUser = JSON.parse(localStorage.getItem("budget"));
+      QuantityBudget = new Budge(budgetUser);
+      const ui = new Interfase();
+      ui.insertBudget(QuantityBudget.budgetUser);
+      if (localStorage.getItem("dayInitial")) {
+        dayInitial = JSON.parse(localStorage.getItem("dayInitial"));
+        if (localStorage.getItem("dayLetter")) {
+          dayLetter = JSON.parse(localStorage.getItem("dayLetter"));
+        }
+      }
+    }
+  }
+}
 //class budget manage all relaship for logic
 class Budge {
   constructor() {
@@ -276,8 +317,9 @@ class Budge {
     this.BundgetExpense(quantity);
     return (this.remaining -= Number(quantity));
   }
-  BundgetExpense(expenditure = 0) {
-    return (this.accumulatedExpense += expenditure);
+  BundgetExpense() {
+    return (this.accumulatedExpense =
+      Number(this.budgetUser) - Number(this.reimaining));
   }
 }
 //class interfase manage all relaship for HTML
@@ -311,28 +353,34 @@ class Interfase {
     }, 3000);
   }
   //inset spending in Html
-  addSpending(name, quantity) {
-    const listSpending = document.querySelector("#gastos ul");
-    //create il
-    const li = document.createElement("li");
-    li.className =
-      "list-group-item d-flex justify-content-between align-item-center";
-    //insert
-    li.innerHTML = `
-        ${name}
-       <span class="badge badge-pill badge-primary">$${quantity}</span>
+  addSpending(day, hours = "10:00PM", name, quantity) {
+    const listSpending = document.querySelector("#dayOne");
+    const cardEmpty = document.querySelector(".empty").remove();
+    //create element
+    const div = document.createElement("div");
+    div.classList = "spending shadowBox card p-3 mt-0";
+    div.innerHTML = `
+      <div class="info">
+        <h3>${name}</h3>
+        <span class="badge badge-pill badge-primary">$${quantity}</span>
+      </div>
+      <div class="text-right hour">
+        <span>${hours}</span>
+      </div>
     `;
-    listSpending.appendChild(li);
+    listSpending.appendChild(div);
   }
   //update remaining
   remainingBudget(quantity) {
     const reimaining = document.querySelector("span#restante");
+    const expenditure = document.querySelector("span#Expense");
     //update remaining ub logic
     const reimainingUi = QuantityBudget.bundgetRemaining(quantity);
+    const expenditureUi = QuantityBudget.BundgetExpense();
     //update html
     reimaining.innerHTML = `${reimainingUi}`;
-
-    this.checkBundget();
+    expenditure.innerHTML = `${expenditureUi}`;
+    //this.checkBundget();
   }
   //change color remaining
   checkBundget() {
@@ -364,34 +412,73 @@ class Alert {
         title: "¡Bienvenido!",
         text: "Ingresa tu presupuesto para esta semana",
         input: "text",
-        inputPlaceholder: " $00.00Mxn",
+        inputPlaceholder: " $00.00 Mxn",
         inputValue: "",
       });
       budgetUser = budgetInitail;
       if (budgetUser == null || budgetUser === "") {
         window.location.reload();
       } else {
+        haveBudget = true;
         QuantityBudget = new Budge(budgetUser);
-        console.log(QuantityBudget);
         const ui = new Interfase();
+        const storage = new BudgetStorage();
+        //console.log(QuantityBudget);
         ui.insertBudget(QuantityBudget.budgetUser);
+        storage.SaveHaveBudget();
+        window.location.reload();
       }
+    })();
+  }
+  FormAlert() {
+    (async () => {
+      const { value: formData } = await Swal.mixin({
+        input: "text",
+        imageAlt: "Agrega un gasto",
+        confirmButtonText: "Siguiente &rarr;",
+        showCancelButton: true,
+        imageUrl: "./img/outsale.svg",
+        imageHeight: 100,
+        progressSteps: ["1", "2"],
+      })
+        .queue([
+          {
+            title: "Agrega gasto",
+            inputPlaceholder: "Nombre del gasto",
+            inputValue: "",
+            inputValidator: (formData) => {
+              if (!formData) {
+                return "Necesitas ponerle nombre al gasto!";
+              }
+            },
+          },
+          {
+            title: "Agrega gasto",
+            inputPlaceholder: "$ 00.00",
+            inputValue: "",
+            inputValidator: (formData) => {
+              if (!formData) {
+                return "Necesitas poner el monto del gasto!";
+              }
+            },
+          },
+        ])
+        .then((formData) => {
+          if (formData.value) {
+            const answers = formData.value;
+            //instance interfases
+            const ui = new Interfase();
+            hours = dayjs().format("hh:mmA");
+            ui.addSpending("dayOne", hours, answers[0], answers[1]);
+            ui.remainingBudget(answers[1]);
+          }
+        });
     })();
   }
 }
 //EventListener
 document.addEventListener("DOMContentLoaded", function () {
-  const year = dayjs().format("YYYY");
-  const month = dayjs().format("M");
-  const day = dayjs().format("D");
-  const dateletter = new Date().getDay();
-  hours = dayjs().format("hh:mmA");
-
-  console.log(hours);
-  yearInitial = year;
-  monthInitial = month;
-  dayLetter = dateletter;
-  dayInitial = day;
+  const storage = new BudgetStorage();
   const mode = new DarkMode(
     "body",
     "#card",
@@ -400,10 +487,28 @@ document.addEventListener("DOMContentLoaded", function () {
     ".controls ul",
     ".Daycontainer"
   );
+  const year = dayjs().format("YYYY");
+  const month = dayjs().format("M");
+  const day = dayjs().format("D");
+  const dateletter = new Date().getDay();
+  currentDay = dateletter;
+  dayAccumulated = currentDay - dayInitial;
+  console.log(dayAccumulated);
+  storage.CheckHaveBudget();
   new Slider(".slider", false);
-  const startAlert = new Alert();
   mode.InitailMode();
-  startAlert.StarAlert();
+  if (currentDay === 6 && hours === "12:59PM") {
+    localStorage.clear();
+  }
+  if (haveBudget === false) {
+    dayLetter = dateletter;
+    dayInitial = day;
+    console.log(hours);
+    yearInitial = year;
+    monthInitial = month;
+    const startAlert = new Alert();
+    startAlert.StarAlert();
+  }
 });
 
 btnMode.addEventListener("click", function (e) {
@@ -420,7 +525,10 @@ btnMode.addEventListener("click", function (e) {
   btnMode.classList.toggle("active");
 });
 
-btnAdd.addEventListener("click", function (e) {});
+btnAdd.addEventListener("click", function (e) {
+  const form = new Alert();
+  form.FormAlert();
+});
 
 /*form.addEventListener("submit", function (e) {
   e.preventDefault();
