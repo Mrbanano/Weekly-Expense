@@ -1,38 +1,277 @@
+.card-img-top,
+#card,
+body,
+.card-money {
+  transition: baclground 0.5s ease-in;
+}
+.mode {
+  padding: 0.5em;
+  position: absolute;
+  right: 0;
+}
+.switch {
+  background: #343d5b;
+  border-radius: 1000px;
+  border: none;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  outline: none;
+  transition: all 0.5s ease-in;
+}
+.switch::after {
+  content: "";
+  display: block;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  background: #f1f1f1;
+  top: 0;
+  left: 0;
+  right: unset;
+  border-radius: 100px;
+  transition: all 0.5s ease-in;
+  box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.2);
+}
+.switch:focus {
+  border: none;
+  outline: none;
+}
+.active {
+  background-color: orange;
+  color: #000;
+  transition: all 0.5s ease-in;
+}
+.active::after {
+  left: unset;
+  right: 0;
+  transition: all 0.5s ease-in;
+}
+
+.switch span {
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  display: block;
+  background: none;
+  color: #fff;
+  transition: all 0.5s ease-in;
+}
+
+/*content*/
+.cash {
+  margin-top: -50px;
+  transition: all 0.5s ease-in;
+}
+.icons {
+  width: 50px;
+  height: 50px;
+  margin: auto;
+}
+.coin {
+  width: 25px;
+  height: 25px;
+}
+.shadow {
+  border: none;
+}
+.shadowBox {
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.16), 0px 2px 10px rgba(0, 0, 0, 0.12);
+}
+.days {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  margin: 30px auto;
+}
+.days li {
+  width: 50px;
+  height: 50px;
+  background-color: tomato;
+  border-radius: 100%;
+  list-style: none;
+  display: inline-block;
+}
+
+.spending {
+  top: 0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 7fr 3fr;
+}
+
+.slider {
+  overflow: hidden;
+  position: relative;
+}
+
+.slider .Daycontainer {
+  white-space: nowrap;
+  position: relative;
+  transition: all 0.3s ease-in-out;
+}
+
+.slider .Daycontainer * {
+  white-space: normal;
+}
+.empty {
+  padding: 0.6em;
+  width: 100%;
+  background: #eee;
+  height: 200px;
+  box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.4);
+}
+.empty img {
+  margin: 0px calc(50% - 50px);
+  width: 100px;
+  height: 100px;
+}
+
+.slider .days {
+  width: 100%;
+  display: inline-block;
+  margin-right: -4.2px;
+}
+.controls {
+  margin: 2em 0 2em 0;
+  width: 100%;
+}
+.slider .controls ul {
+  padding: 0px;
+
+  text-align: center;
+  bottom: 1em;
+  margin: 0px;
+  width: 100%;
+  z-index: 5;
+}
+.circuleDay {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+.sub {
+  padding: 0.1em;
+  font-size: 10px;
+}
+.slider .controls li.active {
+  background-color: blue;
+  color: white;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
+}
+
+.slider .controls li.active.bg-dark {
+  background-color: #fff !important;
+  color: black;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
+}
+
+.slider .controls li {
+  list-style: none;
+  background-color: #ffffff;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  margin-right: 10px;
+  display: inline-block;
+  cursor: pointer;
+}
+.black {
+  background-color: #343a40;
+}
+/*fin slider*/
+/*btn*/
+.btn-add {
+  position: fixed;
+  bottom: 20px;
+  right: 10%;
+  border-radius: 100%;
+}
+.fa-plus-circle {
+  color: #a18cd1;
+  font-size: 3em;
+  background-color: white;
+  border-radius: 100%;
+}
+.fa-plus-circle:hover {
+  color: #9480c3;
+}
+
+@media only screen and (min-device-width: 300px) and (max-device-width: 800px) {
+  * {
+    padding: 0;
+    margin: 0;
+  }
+  .mode {
+    padding: 0em 0.5e;
+  }
+  #app {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  .rounded {
+    padding-left: 0px;
+  }
+  #card {
+    margin-top: -0.1em !important ;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.16),
+      0px 2px 10px rgba(0, 0, 0, 0.12);
+  }
+  .card-img-top {
+    height: 150px;
+  }
+  .cash {
+    margin-top: -60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .shadow {
+    height: 130px;
+    font-size: 0.5em;
+    margin: 0;
+    padding-bottom: 1em;
+    border-radius: 0;
+  }
+  .icons {
+    width: 25%;
+    height: 25%;
+  }
+}
+
 body {
-    background: #000428;  /* fallback for old browsers */
+  /*background-color: #eee;
+  /*background: #000428;  /* fallback for old browsers 
 background: -webkit-linear-gradient(to right, #004e92, #000428);  
-background: linear-gradient(to right, #004e92, #000428); 
+background: linear-gradient(to right, #004e92, #000428); */
 }
 header {
-    margin: 30px 0;
+  margin: 30px 0;
 }
 .contenido {
-    padding:20px;
+  padding: 20px;
 }
 .contenido-principal {
-    background-color: white;
-    padding: 30px;
-    border-radius: 20px;
+  background-color: white;
+  padding: 30px;
+  border-radius: 20px;
 }
-.presupuesto p{
-    margin-bottom: 0;
-    font-weight: bold;
+.presupuesto p {
+  margin-bottom: 0;
+  font-weight: bold;
 }
 .presupuesto p span {
-    font-weight: normal;
+  font-weight: normal;
 }
 #gastos {
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 }
-h1{
-    font-family: 'Raleway', sans-serif;
-    font-weight: 100;
-    color: white;
+h1 {
+  font-family: "Raleway", sans-serif;
+  font-weight: 100;
+  color: white;
 }
 h2 {
-    font-family: 'Raleway', sans-serif;
-    font-weight: 100;
-    color:#004e92;
-    font-size: 22px;
-    margin-bottom:30px;
+  font-family: "Raleway", sans-serif;
+  font-weight: 100;
+  color: #004e92;
+  font-size: 22px;
+  margin-bottom: 30px;
 }
