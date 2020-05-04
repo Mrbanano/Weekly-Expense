@@ -91,13 +91,13 @@ body,
   list-style: none;
   display: inline-block;
 }
-/*
+
 .spending {
+  top: 0;
   width: 100%;
   display: grid;
   grid-template-columns: 7fr 3fr;
 }
-slider*/
 
 .slider {
   overflow: hidden;
